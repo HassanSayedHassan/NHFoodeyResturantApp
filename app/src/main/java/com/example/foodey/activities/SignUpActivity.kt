@@ -1,8 +1,8 @@
 package com.example.foodey.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.example.foodey.R
 import com.example.foodey.util.obtainViewModel
@@ -23,8 +23,17 @@ class SignUpActivity : AppCompatActivity() {
 
     }
 
+    private fun initVar() {
+        signUpVM = obtainViewModel(SignupVM::class.java)
+    }
+
     private fun initView() {
         observeAndUpdateView()
+
+        signUpVM.toastMsg.observe(this, Observer {msg->
+            Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
+        })
+
         handleButton()
     }
 
@@ -55,10 +64,6 @@ class SignUpActivity : AppCompatActivity() {
         btnRegister.setOnClickListener {
             signUpVM.register()
         }
-    }
-
-    private fun initVar() {
-        signUpVM = obtainViewModel(SignupVM::class.java)
     }
 
 }
